@@ -17,7 +17,7 @@ No HTTP, no gRPC — the same message broker you use for pub/sub handles RPC.
 # Topic form — simplest
 {:ok, result} = PhoenixMicro.rpc("math.sum", [1, 2, 3])
 
-# Service + pattern form (NestJS-style routing)
+# Service + pattern form
 {:ok, result} = PhoenixMicro.rpc("math", "sum", [1, 2, 3])
 
 # With options
@@ -60,7 +60,7 @@ defmodule MyApp.RPC.MathConsumer do
 end
 ```
 
-## Pattern routing (NestJS-style)
+## Pattern routing
 
 `PhoenixMicro.rpc("service", "pattern", payload)` publishes to `"service.pattern"`.
 Route multiple patterns in a single consumer with wildcards:
