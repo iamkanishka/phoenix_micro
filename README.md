@@ -6,7 +6,7 @@
 
 **Production-grade microservices toolkit for Elixir/Phoenix.**
 
-Inspired by NestJS microservices, built natively for OTP and the BEAM VM. PhoenixMicro gives your Phoenix application a full microservices substrate — transports, RPC, schema registry, circuit breakers, sagas, outbox pattern, and more.
+ Phoenix Microservices built natively for OTP and the BEAM VM. PhoenixMicro gives your Phoenix application a full microservices substrate — transports, RPC, schema registry, circuit breakers, sagas, outbox pattern, and more.
 
 ## Features
 
