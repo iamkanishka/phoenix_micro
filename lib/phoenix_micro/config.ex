@@ -41,12 +41,14 @@ defmodule PhoenixMicro.Config do
                  transport: [
                    type: {:in, [:rabbitmq, :kafka, :nats, :redis_streams, :memory]},
                    default: :memory,
-                   doc: "The default transport to use when none is specified on publish/subscribe."
+                   doc:
+                     "The default transport to use when none is specified on publish/subscribe."
                  ],
                  transports: [
                    type: :keyword_list,
                    default: [memory: []],
-                   doc: "Per-transport configuration. Keys are transport atoms, values are keyword lists."
+                   doc:
+                     "Per-transport configuration. Keys are transport atoms, values are keyword lists."
                  ],
                  default_timeout: [
                    type: :pos_integer,
@@ -71,7 +73,8 @@ defmodule PhoenixMicro.Config do
                  idempotency_store: [
                    type: {:or, [:atom, nil]},
                    default: nil,
-                   doc: "Module implementing `PhoenixMicro.IdempotencyStore` behaviour, or nil to disable."
+                   doc:
+                     "Module implementing `PhoenixMicro.IdempotencyStore` behaviour, or nil to disable."
                  ]
                )
 
@@ -142,7 +145,9 @@ defmodule PhoenixMicro.Config do
         validated
 
       {:error, err} ->
-        Logger.warning("[PhoenixMicro.Config] Invalid config for transport #{name}: #{inspect(err)}")
+        Logger.warning(
+          "[PhoenixMicro.Config] Invalid config for transport #{name}: #{inspect(err)}"
+        )
 
         config
     end

@@ -141,7 +141,9 @@ defmodule PhoenixMicro.Transport.BroadwayProducer do
   def handle_info({:incoming, %Message{} = message}, state) do
     if state.buffer_size >= state.max_demand do
       # Buffer full — nack so the broker redelivers
-      Logger.warning("[BroadwayProducer] Buffer full (#{state.max_demand}), nacking #{message.id}")
+      Logger.warning(
+        "[BroadwayProducer] Buffer full (#{state.max_demand}), nacking #{message.id}"
+      )
 
       state.transport_mod.nack(message, :buffer_full, %{})
 

@@ -403,7 +403,9 @@ defmodule PhoenixMicro.Outbox.Relay do
     new_attempt = row.attempt + 1
     error_msg = inspect(reason)
 
-    Logger.warning("[Outbox.Relay] Failed to relay #{row.id} (attempt #{row.attempt}): #{error_msg}")
+    Logger.warning(
+      "[Outbox.Relay] Failed to relay #{row.id} (attempt #{row.attempt}): #{error_msg}"
+    )
 
     table = state.schema.__schema__(:source)
 

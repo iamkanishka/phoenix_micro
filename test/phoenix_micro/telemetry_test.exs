@@ -51,7 +51,8 @@ defmodule PhoenixMicro.TelemetryTest do
 
       Telemetry.message_processed("orders.placed", %{duration: 12_345, transport: :kafka})
 
-      assert_receive {:telemetry_event, [:phoenix_micro, :message, :processed], %{duration: 12_345}, meta},
+      assert_receive {:telemetry_event, [:phoenix_micro, :message, :processed],
+                      %{duration: 12_345}, meta},
                      500
 
       assert meta.topic == "orders.placed"
@@ -108,7 +109,8 @@ defmodule PhoenixMicro.TelemetryTest do
 
       Telemetry.rpc_response("math.sum", %{duration: 987, correlation_id: "abc"})
 
-      assert_receive {:telemetry_event, [:phoenix_micro, :rpc, :response], %{duration: 987}, _meta},
+      assert_receive {:telemetry_event, [:phoenix_micro, :rpc, :response], %{duration: 987},
+                      _meta},
                      500
     end
   end
@@ -119,7 +121,8 @@ defmodule PhoenixMicro.TelemetryTest do
 
       Telemetry.rpc_timeout("slow.service", %{correlation_id: "xyz"})
 
-      assert_receive {:telemetry_event, [:phoenix_micro, :rpc, :timeout], %{count: 1}, %{topic: "slow.service"}},
+      assert_receive {:telemetry_event, [:phoenix_micro, :rpc, :timeout], %{count: 1},
+                      %{topic: "slow.service"}},
                      500
     end
   end
@@ -130,7 +133,8 @@ defmodule PhoenixMicro.TelemetryTest do
 
       Telemetry.transport_connected(:rabbitmq)
 
-      assert_receive {:telemetry_event, [:phoenix_micro, :transport, :connected], %{count: 1}, %{transport: :rabbitmq}},
+      assert_receive {:telemetry_event, [:phoenix_micro, :transport, :connected], %{count: 1},
+                      %{transport: :rabbitmq}},
                      500
     end
 

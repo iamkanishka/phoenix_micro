@@ -60,7 +60,9 @@ defmodule PhoenixMicro.Middleware.Logger do
 
   @impl PhoenixMicro.Middleware
   def call(%Message{} = message, next) do
-    Logger.debug("[PhoenixMicro] Received #{message.topic} id=#{message.id} attempt=#{message.attempt}")
+    Logger.debug(
+      "[PhoenixMicro] Received #{message.topic} id=#{message.id} attempt=#{message.attempt}"
+    )
 
     start = System.monotonic_time(:microsecond)
     result = next.(message)
@@ -68,10 +70,14 @@ defmodule PhoenixMicro.Middleware.Logger do
 
     case result do
       :ok ->
-        Logger.debug("[PhoenixMicro] Processed #{message.topic} id=#{message.id} in #{duration}µs")
+        Logger.debug(
+          "[PhoenixMicro] Processed #{message.topic} id=#{message.id} in #{duration}µs"
+        )
 
       {:error, reason} ->
-        Logger.warning("[PhoenixMicro] Failed #{message.topic} id=#{message.id} in #{duration}µs — #{inspect(reason)}")
+        Logger.warning(
+          "[PhoenixMicro] Failed #{message.topic} id=#{message.id} in #{duration}µs — #{inspect(reason)}"
+        )
     end
 
     result
@@ -151,7 +157,9 @@ defmodule PhoenixMicro.Middleware.Retry do
       {:error, reason} when attempt < max ->
         delay = RetryScheduler.next_delay(attempt, opts)
 
-        Logger.debug("[Middleware.Retry] Retrying attempt #{attempt + 1} in #{delay}ms: #{inspect(reason)}")
+        Logger.debug(
+          "[Middleware.Retry] Retrying attempt #{attempt + 1} in #{delay}ms: #{inspect(reason)}"
+        )
 
         Process.sleep(delay)
         do_call(Message.increment_attempt(message), next, max, attempt + 1, opts)

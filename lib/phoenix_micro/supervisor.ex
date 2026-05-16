@@ -220,7 +220,9 @@ defmodule PhoenixMicro.Supervisor.ConsumerManager do
         {:ok, existing_pid}
 
       {:error, reason} ->
-        Logger.error("[ConsumerManager] Failed to start #{inspect(consumer_module)}: #{inspect(reason)}")
+        Logger.error(
+          "[ConsumerManager] Failed to start #{inspect(consumer_module)}: #{inspect(reason)}"
+        )
 
         {:error, reason}
     end

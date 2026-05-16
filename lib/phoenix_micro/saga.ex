@@ -445,7 +445,9 @@ defmodule PhoenixMicro.Saga.Server do
           %{saga_id: state.saga_id, reason: inspect(comp_reason)}
         )
 
-        Logger.error("[Saga] #{state.saga_id} FATAL — compensation failed: #{inspect(comp_reason)}")
+        Logger.error(
+          "[Saga] #{state.saga_id} FATAL — compensation failed: #{inspect(comp_reason)}"
+        )
 
         notify_result(state, {:error, :compensation_failed, comp_reason})
         %{state | status: :fatal, failure_reason: comp_reason}

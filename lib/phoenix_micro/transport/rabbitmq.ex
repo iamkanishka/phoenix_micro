@@ -93,7 +93,7 @@ defmodule PhoenixMicro.Transport.RabbitMQ do
   def connect(config) do
     unless Code.ensure_loaded?(AMQP.Connection) do
       raise "PhoenixMicro RabbitMQ transport requires {:amqp, \"~> 3.3\"} " <>
-             "in your app's mix.exs."
+              "in your app's mix.exs."
     end
 
     url = Keyword.get(config, :url, "amqp://localhost")
@@ -401,9 +401,11 @@ defmodule PhoenixMicro.Transport.RabbitMQ do
 
   defp amqp_match([], []), do: true
   defp amqp_match(["#"], _rest), do: true
+
   defp amqp_match(["#" | prest], [_tok | trest]) do
     amqp_match(["#" | prest], trest) or amqp_match(prest, trest)
   end
+
   defp amqp_match(["*" | prest], [_tok | trest]), do: amqp_match(prest, trest)
   defp amqp_match([same | prest], [same | trest]), do: amqp_match(prest, trest)
   defp amqp_match(_pat, _seg), do: false

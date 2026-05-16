@@ -37,7 +37,8 @@ defmodule Mix.Tasks.PhoenixMicro.Gen.Saga do
         generate(module_name, steps, opts)
 
       [_module_name] ->
-        IO.puts(:stderr,
+        IO.puts(
+          :stderr,
           "Provide at least one step name.\n\n" <>
             "Usage: mix phoenix_micro.gen.saga <Module> <step1> [step2 ...]"
         )

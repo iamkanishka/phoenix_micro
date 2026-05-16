@@ -185,6 +185,7 @@ defmodule PhoenixMicro.MixProject do
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
     """
   end
+
   defp before_closing_head_tag(_), do: ""
 
   defp before_closing_body_tag(:html), do: ""

@@ -280,7 +280,9 @@ defmodule PhoenixMicro.Pipeline do
       # Exhausted — route to DLQ
       dlq_topic = cfg.dlq_topic || "dlq.#{msg.topic}"
 
-      Logger.warning("[Pipeline] Exhausted #{max_attempts} attempts for #{msg.id}, routing to DLQ #{dlq_topic}")
+      Logger.warning(
+        "[Pipeline] Exhausted #{max_attempts} attempts for #{msg.id}, routing to DLQ #{dlq_topic}"
+      )
 
       transport_mod = Config.transport_module(cfg.transport || Config.get(:transport, :memory))
 

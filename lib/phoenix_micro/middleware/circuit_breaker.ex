@@ -118,7 +118,9 @@ defmodule PhoenixMicro.Middleware.CircuitBreaker do
         if count >= threshold do
           trip(fuse, reason)
         else
-          Logger.debug("[CircuitBreaker] #{fuse} failure #{count}/#{threshold}: #{inspect(reason)}")
+          Logger.debug(
+            "[CircuitBreaker] #{fuse} failure #{count}/#{threshold}: #{inspect(reason)}"
+          )
         end
 
         err
@@ -142,7 +144,9 @@ defmodule PhoenixMicro.Middleware.CircuitBreaker do
         %{fuse: fuse, remaining_ms: remaining}
       )
 
-      Logger.warning("[CircuitBreaker] #{fuse} OPEN — rejecting message #{message.id}, resets in #{remaining}ms")
+      Logger.warning(
+        "[CircuitBreaker] #{fuse} OPEN — rejecting message #{message.id}, resets in #{remaining}ms"
+      )
 
       {:error, :circuit_open}
     end
@@ -164,7 +168,9 @@ defmodule PhoenixMicro.Middleware.CircuitBreaker do
         :ok
 
       {:error, reason} = err ->
-        Logger.warning("[CircuitBreaker] #{fuse} probe failed — returning to OPEN: #{inspect(reason)}")
+        Logger.warning(
+          "[CircuitBreaker] #{fuse} probe failed — returning to OPEN: #{inspect(reason)}"
+        )
 
         trip(fuse, reason)
         err

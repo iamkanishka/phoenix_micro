@@ -60,7 +60,9 @@ defmodule PhoenixMicro.Application do
           Logger.info("[PhoenixMicro] Auto-registered consumer #{inspect(module)}")
 
         {:error, reason} ->
-          Logger.error("[PhoenixMicro] Failed to auto-register #{inspect(module)}: #{inspect(reason)}")
+          Logger.error(
+            "[PhoenixMicro] Failed to auto-register #{inspect(module)}: #{inspect(reason)}"
+          )
       end
     end)
   end

@@ -159,12 +159,16 @@ defmodule PhoenixMicro.Transport.NATS do
         Logger.info("[NATS] Connected to #{state.config[:host]}:#{state.config[:port]}")
         Telemetry.transport_connected(:nats)
 
-        {:noreply,
-         %{state | conn: new_state.conn, connected: true, reconnect_attempts: 0}}
+        {:noreply, %{state | conn: new_state.conn, connected: true, reconnect_attempts: 0}}
 
       {:error, reason} ->
-        interval = Backoff.next_delay(state.reconnect_attempts + 1,
-          base: @reconnect_base_ms, cap: @reconnect_cap_ms, jitter: true)
+        interval =
+          Backoff.next_delay(state.reconnect_attempts + 1,
+            base: @reconnect_base_ms,
+            cap: @reconnect_cap_ms,
+            jitter: true
+          )
+
         Logger.warning("[NATS] Connection failed (#{inspect(reason)}), retrying in #{interval}ms")
         Process.send_after(self(), :connect, interval)
         {:noreply, %{state | connected: false, reconnect_attempts: state.reconnect_attempts + 1}}
@@ -175,8 +179,10 @@ defmodule PhoenixMicro.Transport.NATS do
   def handle_info({:DOWN, _ref, :process, pid, reason}, %{conn: pid} = state) do
     Logger.warning("[NATS] Connection lost: #{inspect(reason)}")
     Telemetry.transport_disconnected(:nats, reason)
-    interval = Backoff.next_delay(1,
-      base: @reconnect_base_ms, cap: @reconnect_cap_ms, jitter: true)
+
+    interval =
+      Backoff.next_delay(1, base: @reconnect_base_ms, cap: @reconnect_cap_ms, jitter: true)
+
     Process.send_after(self(), :connect, interval)
     {:noreply, %{state | conn: nil, connected: false, subscriptions: %{}}}
   end
@@ -224,10 +230,12 @@ defmodule PhoenixMicro.Transport.NATS do
 
     if Keyword.get(opts, :sync, false) do
       timeout = Keyword.get(opts, :timeout, @default_rpc_timeout)
+
       case apply(Gnat, :request, [state.conn, topic, payload, [receive_timeout: timeout]]) do
         {:ok, _reply} ->
           Telemetry.message_published(topic, %{transport: :nats})
           {:reply, :ok, state}
+
         {:error, reason} ->
           {:reply, {:error, reason}, state}
       end
@@ -236,6 +244,7 @@ defmodule PhoenixMicro.Transport.NATS do
         :ok ->
           Telemetry.message_published(topic, %{transport: :nats})
           {:reply, :ok, state}
+
         {:error, reason} ->
           {:reply, {:error, reason}, state}
       end
@@ -355,9 +364,11 @@ defmodule PhoenixMicro.Transport.NATS do
   defp do_match(_pat, _seg), do: false
 
   defp parse_headers(nil), do: %{}
+
   defp parse_headers(headers) when is_list(headers) do
     Map.new(headers, fn {k, v} -> {to_string(k), to_string(v)} end)
   end
+
   defp parse_headers(headers) when is_map(headers), do: headers
 
   defp parse_attempt(headers) do

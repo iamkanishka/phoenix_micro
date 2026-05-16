@@ -365,7 +365,9 @@ defmodule PhoenixMicro.Consumer.Worker do
         {:noreply, %{state | subscription_ref: ref}}
 
       {:error, reason} ->
-        Logger.error("[Consumer] Subscription failed for #{inspect(state.consumer_module)}: #{inspect(reason)}")
+        Logger.error(
+          "[Consumer] Subscription failed for #{inspect(state.consumer_module)}: #{inspect(reason)}"
+        )
 
         Process.send_after(self(), :subscribe, 2_000)
         {:noreply, state}
@@ -443,7 +445,9 @@ defmodule PhoenixMicro.Consumer.Worker do
       true ->
         delay = RetryScheduler.next_delay(updated_message.attempt, retry_opts)
 
-        Logger.info("[Consumer] Retrying #{message.id} in #{delay}ms (attempt #{updated_message.attempt})")
+        Logger.info(
+          "[Consumer] Retrying #{message.id} in #{delay}ms (attempt #{updated_message.attempt})"
+        )
 
         Telemetry.message_failed(message.topic, %{
           consumer: state.consumer_module,

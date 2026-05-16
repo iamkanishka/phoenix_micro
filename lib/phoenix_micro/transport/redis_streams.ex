@@ -54,7 +54,7 @@ defmodule PhoenixMicro.Transport.RedisStreams do
   def connect(config) do
     unless Code.ensure_loaded?(Redix) do
       raise "PhoenixMicro Redis Streams transport requires the :redix dependency. " <>
-            "Add `{:redix, \"~> 1.5\"}` to your app's mix.exs (not phoenix_micro)."
+              "Add `{:redix, \"~> 1.5\"}` to your app's mix.exs (not phoenix_micro)."
     end
 
     url = Keyword.get(config, :url, "redis://localhost:6379")
@@ -257,16 +257,28 @@ defmodule PhoenixMicro.Transport.RedisStreams do
   # Private helpers
   # ---------------------------------------------------------------------------
 
-  defp poll_stream(conn, %{stream: stream, group: group,
-                            consumer: consumer, handler: handler, opts: opts}) do
+  defp poll_stream(conn, %{
+         stream: stream,
+         group: group,
+         consumer: consumer,
+         handler: handler,
+         opts: opts
+       }) do
     batch_size = Keyword.get(opts, :batch_size, 10)
-    block_ms   = Keyword.get(opts, :block_ms, @read_timeout)
+    block_ms = Keyword.get(opts, :block_ms, @read_timeout)
 
     cmd = [
-      "XREADGROUP", "GROUP", group, consumer,
-      "COUNT", Integer.to_string(batch_size),
-      "BLOCK", Integer.to_string(block_ms),
-      "STREAMS", stream, ">"
+      "XREADGROUP",
+      "GROUP",
+      group,
+      consumer,
+      "COUNT",
+      Integer.to_string(batch_size),
+      "BLOCK",
+      Integer.to_string(block_ms),
+      "STREAMS",
+      stream,
+      ">"
     ]
 
     case apply(Redix, :command, [conn, cmd]) do
