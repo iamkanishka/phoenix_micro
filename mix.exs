@@ -2,7 +2,7 @@ defmodule PhoenixMicro.MixProject do
   use Mix.Project
 
   @version "1.0.0"
-  @source_url "https://github.com/your-org/phoenix_micro"
+  @source_url "https://github.com/iamkanishka/phoenix_micro"
   @description "Production-grade microservices toolkit for Elixir/Phoenix — transports, sagas, RPC, schema registry, circuit breakers, outbox pattern, and more."
 
   def project do
