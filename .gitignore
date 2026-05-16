@@ -1,0 +1,28 @@
+# Elixir artifacts
+/_build/
+/cover/
+/deps/
+/doc/
+/.fetch
+erl_crash.dump
+*.ez
+*.beam
+/tmp/
+
+# Dialyzer PLTs
+/priv/plts/
+
+# Generated on new projects by `mix new`
+mix.lock
+
+# Environment
+.env
+.env.local
+*.secret.exs
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
