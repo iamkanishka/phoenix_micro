@@ -2,7 +2,7 @@ defmodule PhoenixMicro do
   @moduledoc """
   PhoenixMicro — a production-grade microservices toolkit for Elixir/Phoenix.
 
-  Inspired by NestJS microservices, built natively for OTP and the BEAM VM.
+  Phoenix Microservices, built natively for OTP and the BEAM VM.
 
   ## Quick start
 
